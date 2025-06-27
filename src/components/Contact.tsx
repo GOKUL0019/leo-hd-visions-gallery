@@ -49,7 +49,7 @@ const Contact = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch('https://formspree.io/f/xnnvoybj', {
+        const response = await fetch('https://formspree.io/f/mkgbknrp', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
