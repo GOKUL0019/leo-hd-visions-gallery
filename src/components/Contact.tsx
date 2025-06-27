@@ -1,313 +1,261 @@
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { Phone, MessageCircle, MapPin, Send, Check } from 'lucide-react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Label } from './ui/label';
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
+}
 
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { toast } = useToast();
-  
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    eventDate: "",
-    eventType: "",
-    message: ""
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const validateForm = () => {
+    const newErrors: FormErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Basic form validation
-    if (!formData.name || !formData.phone || !formData.eventType) {
-      toast({
-        title: "Please fill in required fields",
-        description: "Name, phone, and event type are required.",
-        variant: "destructive"
-      });
-      return;
+    if (validateForm()) {
+      try {
+        const response = await fetch('https://formspree.io/f/xnnvoybj', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          setIsSubmitted(true);
+          setTimeout(() => {
+            setIsSubmitted(false);
+            setFormData({ name: '', email: '', phone: '', message: '' });
+          }, 3000);
+        } else {
+          alert('Failed to send message. Please try again.');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Something went wrong. Please try again.');
+      }
     }
-
-    // Create WhatsApp message
-    const whatsappMessage = `Hi Leo HD Video & Studio! 
-
-I'm interested in your photography services:
-
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Event Date: ${formData.eventDate}
-Event Type: ${formData.eventType}
-
-Message: ${formData.message}
-
-Please contact me with more details and pricing.`;
-
-    const whatsappUrl = `https://wa.me/919443212840?text=${encodeURIComponent(whatsappMessage)}`;
-    window.open(whatsappUrl, '_blank');
-
-    toast({
-      title: "Redirecting to WhatsApp",
-      description: "You'll be connected with our team shortly!"
-    });
-
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      eventDate: "",
-      eventType: "",
-      message: ""
-    });
   };
 
-  const contactInfo = [
-    {
-      icon: "📞",
-      title: "Call Us",
-      value: "+91 9443212840",
-      link: "tel:+919443212840"
-    },
-    {
-      icon: "💬",
-      title: "WhatsApp",
-      value: "+91 9443212840", 
-      link: "https://wa.me/919443212840"
-    },
-    {
-      icon: "📍",
-      title: "Location",
-      value: "Cuddalore, Tamil Nadu",
-      link: "https://maps.google.com/?q=Cuddalore,Tamil+Nadu"
-    },
-    {
-      icon: "📷",
-      title: "Instagram",
-      value: "@leo_hd_video_cuddalore",
-      link: "https://www.instagram.com/leo_hd_video_cuddalore"
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
-  ];
+  };
 
   return (
-    <section id="contact" className="py-20 px-4" ref={ref}>
-      <div className="container mx-auto max-w-7xl">
+    <section id="contact" className="py-20 bg-gradient-to-b from-black/40 to-black/60 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-16"
+          ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Get In <span className="gradient-text">Touch</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-montserrat">
+            Get In <span className="text-gradient">Touch</span>
           </h2>
-          <div className="w-24 h-1 bg-gold mx-auto mb-8"></div>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Ready to capture your special moments? Let's discuss your photography needs and create memories that last forever.
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Ready to capture your special moments? Let's discuss your photography needs
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           <motion.div
-            className="glass-effect p-8 rounded-2xl"
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="glass-effect p-8 rounded-2xl"
           >
-            <h3 className="text-2xl font-semibold text-gold mb-6">Send Us a Message</h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
+            <h3 className="text-2xl font-bold text-white mb-6">Send Us a Message</h3>
+
+            {isSubmitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-8"
+              >
+                <Check className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-white mb-2">Message Sent!</h4>
+                <p className="text-gray-300">We'll get back to you within 24 hours.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Name *
-                  </label>
+                  <Label htmlFor="name" className="text-white">Name *</Label>
                   <Input
-                    type="text"
+                    id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="bg-black/20 border-gray-600 text-white placeholder-gray-400"
+                    className="mt-2 bg-black/20 border-gray-600 text-white placeholder:text-gray-400"
                     placeholder="Your full name"
-                    required
                   />
+                  {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Phone *
-                  </label>
+                  <Label htmlFor="email" className="text-white">Email *</Label>
                   <Input
-                    type="tel"
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="mt-2 bg-black/20 border-gray-600 text-white placeholder:text-gray-400"
+                    placeholder="your.email@example.com"
+                  />
+                  {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+                </div>
+
+                <div>
+                  <Label htmlFor="phone" className="text-white">Phone Number *</Label>
+                  <Input
+                    id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="bg-black/20 border-gray-600 text-white placeholder-gray-400"
+                    className="mt-2 bg-black/20 border-gray-600 text-white placeholder:text-gray-400"
                     placeholder="Your phone number"
-                    required
                   />
+                  {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
                 </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={formData.email}
+                  <Label htmlFor="message" className="text-white">Message *</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleInputChange}
-                    className="bg-black/20 border-gray-600 text-white placeholder-gray-400"
-                    placeholder="your.email@example.com"
+                    rows={5}
+                    className="mt-2 bg-black/20 border-gray-600 text-white placeholder:text-gray-400"
+                    placeholder="Tell us about your event, preferred dates, and any specific requirements..."
                   />
+                  {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Event Date
-                  </label>
-                  <Input
-                    type="date"
-                    name="eventDate"
-                    value={formData.eventDate}
-                    onChange={handleInputChange}
-                    className="bg-black/20 border-gray-600 text-white"
-                  />
-                </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Event Type *
-                </label>
-                <select
-                  name="eventType"
-                  value={formData.eventType}
-                  onChange={handleInputChange}
-                  className="w-full bg-black/20 border border-gray-600 text-white rounded-md px-3 py-2"
-                  required
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-black hover:from-gold-600 hover:to-gold-700 py-3 text-lg font-semibold"
                 >
-                  <option value="">Select event type</option>
-                  <option value="Wedding">Wedding</option>
-                  <option value="Pre-Wedding">Pre-Wedding Shoot</option>
-                  <option value="Reception">Reception</option>
-                  <option value="Birthday">Birthday Party</option>
-                  <option value="Anniversary">Anniversary</option>
-                  <option value="Corporate">Corporate Event</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="bg-black/20 border-gray-600 text-white placeholder-gray-400 min-h-[120px]"
-                  placeholder="Tell us more about your event and requirements..."
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full bg-gold hover:bg-yellow-500 text-black font-semibold py-3 hover-glow"
-                size="lg"
-              >
-                Send Message via WhatsApp
-              </Button>
-            </form>
+                  <Send className="h-5 w-5 mr-2" />
+                  Send Message
+                </Button>
+              </form>
+            )}
           </motion.div>
 
-          {/* Contact Information */}
           <motion.div
-            className="space-y-8"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
+            className="space-y-8"
           >
-            <div>
-              <h3 className="text-2xl font-semibold text-gold mb-6">Contact Information</h3>
+            <div className="glass-effect p-6 rounded-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
               <div className="space-y-4">
-                {contactInfo.map((info, index) => (
-                  <motion.a
-                    key={info.title}
-                    href={info.link}
-                    target={info.link.startsWith('http') ? '_blank' : undefined}
-                    rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex items-center gap-4 glass-effect p-4 rounded-lg hover-glow transition-all duration-300"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.6, delay: 0.1 * index }}
-                  >
-                    <div className="text-2xl">{info.icon}</div>
-                    <div>
-                      <div className="font-medium text-gold">{info.title}</div>
-                      <div className="text-gray-300">{info.value}</div>
-                    </div>
-                  </motion.a>
-                ))}
+                <div className="flex items-center gap-4">
+                  <div className="bg-gold-500/20 p-3 rounded-full">
+                    <Phone className="h-6 w-6 text-gold-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">Phone</p>
+                    <a href="tel:9443212840" className="text-gold-400 hover:text-gold-300 transition-colors">
+                      9443212840
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="bg-green-500/20 p-3 rounded-full">
+                    <MessageCircle className="h-6 w-6 text-green-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">WhatsApp</p>
+                    <a
+                      href="https://wa.me/919443212840"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-400 hover:text-green-300 transition-colors"
+                    >
+                      Chat with us
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="bg-blue-500/20 p-3 rounded-full">
+                    <MapPin className="h-6 w-6 text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">Location</p>
+                    <p className="text-gray-300">68.Gedilam Bypass Road</p>
+                    <p className="text-gray-300">TACBEA, Cuddalore – 607002</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Google Maps Embed */}
-            <motion.div
-              className="glass-effect p-4 rounded-2xl"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <h4 className="text-lg font-semibold text-gold mb-4">Our Location</h4>
-              <div className="w-full h-64 bg-gray-800 rounded-lg flex items-center justify-center">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31400.234567890!2d79.7694!3d11.7527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a54a0b3c3c5d5d5%3A0x1234567890abcdef!2sCuddalore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, borderRadius: '0.5rem' }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Leo HD Video & Studio Location"
-                ></iframe>
+            <div className="glass-effect p-6 rounded-2xl">
+              <h3 className="text-xl font-bold text-white mb-4">Find Us</h3>
+              <div className="w-full h-64 rounded-lg overflow-hidden">
+                <a
+                  href="https://www.google.com/maps/place/LEO+HD+VIDEO+%26+STUDIO/@11.7480782,79.755332,17z"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "block", width: "100%", height: "100%" }}
+                >
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3910.336631729679!2d79.755332!3d11.7480782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5499955df19cff%3A0x1bb00a5144a8b3f7!2sLEO%20HD%20VIDEO%20%26%20STUDIO!5e0!3m2!1sen!2sin!4v1719398820000!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, pointerEvents: "none" }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </a>
               </div>
-            </motion.div>
-
-            {/* Quick Action Buttons */}
-            <motion.div
-              className="grid grid-cols-2 gap-4"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <Button
-                onClick={() => window.open('tel:+919443212840')}
-                className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
-              >
-                📞 Call Now
-              </Button>
-              <Button
-                onClick={() => window.open('https://wa.me/919443212840', '_blank')}
-                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3"
-              >
-                💬 WhatsApp
-              </Button>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
