@@ -186,9 +186,12 @@ const Services = () => {
                   ))}
                 </ul>
 
-                <button className="w-full bg-gradient-to-r from-gold-500 to-gold-600 text-black py-3 rounded-full font-semibold hover:from-gold-600 hover:to-gold-700 transition-all duration-300">
-                  Choose Plan
-                </button>
+                <a
+  href="#contact"
+  className="w-full block text-center bg-gradient-to-r from-gold-500 to-gold-600 text-black py-3 rounded-full font-semibold hover:from-gold-600 hover:to-gold-700 transition-all duration-300"
+>
+  Choose Plan
+</a>
               </motion.div>
             ))}
           </div>
