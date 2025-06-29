@@ -25,7 +25,7 @@ const Portfolio = () => {
     { id: 4, category: 'candid', title: 'Aerial Wedding Shot', image: '6rt.png', description: 'Stunning aerial view of wedding venue' },
     { id: 5, category: 'weddings', title: 'Bridal Portrait', image: '3rt.png', description: 'Elegant bridal photography' },
     { id: 12, category: 'weddings', title: 'Bridal Portrait', image: '4rt.png', description: 'Elegant bridal photography' },
-    { id: 6, category: 'studio', title: 'Corporate Headshot', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&h=600&fit=crop', description: 'Professional corporate photography' },
+    
     { id: 7, category: 'candid', title: 'Childhood Joy', image: '7rt.png', description: 'Capturing precious childhood moments' },
     { id: 8, category: 'drone', title: 'Landscape Beauty', image: '8rt.png', description: 'Breathtaking aerial landscape' },
     { id: 9, category: 'studio', title: 'Professional Portrait', image: '9rt.png', description: 'Studio portrait with professional lighting' },

@@ -32,19 +32,19 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h3 className="text-2xl md:text-3xl font-semibold text-gold mb-4">
-              Meet Venkatesh - Your Photography Expert
+              Meet Venkatesan - Your Photography Expert
             </h3>
 
             <p className="text-gray-300 text-lg leading-relaxed">
               With over <span className="text-gold font-semibold">25 years of experience</span> in
-              photography and videography, Venkatesh has been capturing life's most precious moments
+              photography and videography, Venkatesh and team has been capturing life's most precious moments
               with artistic vision and technical excellence.
             </p>
 
             <p className="text-gray-300 text-lg leading-relaxed">
               Based in the heart of Cuddalore, Tamil Nadu, our studio has been the trusted choice
               for families and couples looking to preserve their special moments. We have successfully
-              covered over <span className="text-gold font-semibold">500+ events</span>, from intimate
+              covered over <span className="text-gold font-semibold">5000+ events</span>, from intimate
               family gatherings to grand celebrations.
             </p>
 
@@ -54,7 +54,7 @@ const About = () => {
                 <div className="text-gray-400">Years of Expertise</div>
               </div>
               <div className="glass-effect p-6 rounded-lg text-center hover-glow">
-                <div className="text-3xl font-bold text-gold mb-2">500+</div>
+                <div className="text-3xl font-bold text-gold mb-2">5000+</div>
                 <div className="text-gray-400">Events Covered</div>
               </div>
             </div>
@@ -71,17 +71,17 @@ const About = () => {
               <div className="text-center mb-6">
                 <img
                   src="v.png"
-                  alt="Mr. Venkatesh"
+                  alt="Mr. Venkatesan"
                   className="w-32 h-32 rounded-full object-cover border-4 border-gold mx-auto mb-4 shadow-lg"
                 />
-                <h4 className="text-xl font-semibold text-gold mb-2">Venkatesh</h4>
+                <h4 className="text-xl font-semibold text-gold mb-2">Venkatesan</h4>
                 <p className="text-gray-400">Founder & Lead Photographer</p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-gold rounded-full"></div>
-                  <span className="text-gray-300">Professional Photography Since 1999</span>
+                  <span className="text-gray-300">Professional Photography Since 1995</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-gold rounded-full"></div>

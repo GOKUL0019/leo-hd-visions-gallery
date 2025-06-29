@@ -6,21 +6,25 @@ import { Camera, Video, Heart, BookOpen, Package, Star } from 'lucide-react';
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
+  
+  
+    
   const services = [
+    
     {
       icon: Camera,
       title: "Traditional Photography",
       price: "₹25,000",
       description: "Classic studio and event photography with professional lighting and composition",
-      features: ["Professional Equipment", "High-Resolution Images", "Basic Editing", "Digital Gallery"]
+      features: ["Professional Equipment", "High-Resolution Images", "Advance Editing", "Digital Gallery"]
     },
     {
       icon: Video,
-      title: "Traditional Videography",
+      
+      title: "Half Day Function",
       price: "₹25,000",
-      description: "Standard video coverage of your events with quality recording and editing",
-      features: ["HD Video Recording", "Basic Editing", "Digital Delivery", "Highlight Reel"]
+      description: "Engagement, Baby Shower ,Birthday ,Puberty, Ear piercing",
+      features: ["HD Video Recording", "Advance Editing", "Digital Delivery", "Highlight Reel","Senthik HD Album ->30Sheet"]
     },
     {
       icon: Heart,
@@ -55,36 +59,62 @@ const Services = () => {
 
   const packages = [
     {
-      name: "Basic Plan",
+      name: "Leo Silver Plan",
       price: "₹35,000",
       description: "Perfect for smaller events and intimate celebrations",
       features: [
-        "6 Hours Coverage",
-        "1 Photographer",
-        "Digital Gallery",
-        "Basic Editing",
-        "50 Edited Photos"
+        "Traditional Video",
+        "Traditional Photo",
+        "HD Senthik Album 40sheets",
+        "Pendrive",
+        "12X18 Lamanation"
       ]
     },
     {
-      name: "Premium Plan",
-      price: "₹50,000",
+      name: "Leo Gold Plan",
+      price: "₹75,000",
+      description: "Perfect for smaller events and intimate celebrations",
+      features: [
+        "Traditional Video",
+        "Traditional Photo",
+        "Candid Photo",
+        "Drone",
+        "Advance Editing",
+        "Unlimited Photos",
+        "Highlights video",
+        "Senthik HD Album 50sheets",
+        "Tv->2",
+        "Gift ->12X18 lamanation -2,Calander",
+      ]
+    },
+    {
+      
+      name: "Leo Platinum Plan",
+      price: "₹99,999",
       description: "Our most popular package for complete event coverage",
       features: [
-        "Full Day Coverage",
-        "2 Photographers",
-        "Photo + Video",
-        "Advanced Editing",
-        "Unlimited Photos",
+        "Traditional Video",
+        "Traditional Photo",
+        "Candid Photo",
+        "Drone",
+        "Candid Video",
         "Highlight Video",
-        "Digital Album"
+        "Senthik HD Album ",
+        "Reception and Wedding each 40-Sheet Album  (Glossy or silky Mate or Feather)",
+        "Gift ->12X18 lamanation -2,Calander",
+        "Outdoor shoot( post wedding)",
+        "LED Wall &Tv",
+        "360 video"
       ],
+      
       popular: true
     }
   ];
 
   return (
+    
     <section id="services" className="py-20 bg-gradient-to-b from-black/20 to-black/40 relative">
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -100,9 +130,11 @@ const Services = () => {
             Professional photography and videography services tailored to your needs
           </p>
         </motion.div>
+        
+
 
         {/* Individual Services */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-10 mb-20">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -110,7 +142,7 @@ const Services = () => {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className={`glass-effect p-6 rounded-2xl hover-scale relative ${
-                service.popular ? 'ring-2 ring-gold-400' : ''
+                service.popular ? 'ring-2 ring-gold-600' : ''
               }`}
             >
               {service.popular && (
@@ -151,7 +183,7 @@ const Services = () => {
             <span className="text-gradient">Package Deals</span>
           </h3>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-8xl mx-auto">
             {packages.map((pkg, index) => (
               <motion.div
                 key={index}

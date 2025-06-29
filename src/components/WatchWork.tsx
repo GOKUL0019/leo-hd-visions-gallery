@@ -48,9 +48,9 @@ const WatchWork = () => {
 
   const stats = [
     { icon: Calendar, value: "25+", label: "Years Experience" },
-    { icon: Users, value: "500+", label: "Events Covered" },
-    { icon: Award, value: "HD", label: "Quality Standard" },
-    { icon: Play, value: "100+", label: "Video Projects" }
+    { icon: Users, value: "5000+", label: "Events Covered" },
+    { icon: Award, value: "HD/4K", label: "Quality Standard" },
+    { icon: Play, value: "20000+", label: "Video Projects" }
   ];
 
   return (
