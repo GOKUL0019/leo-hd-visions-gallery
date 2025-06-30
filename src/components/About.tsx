@@ -10,7 +10,7 @@ const About = () => {
     
     <section id="about" className="py-20 px-4 bg-black text-white" ref={ref}>
       <motion.div
-  className="mt-16 glass-effect p-6 rounded-2xl max-w-4xl mx-auto"
+  className="glass-effect p-6 rounded-2xl max-w-4xl mx-auto"
   initial={{ opacity: 0, y: 50 }}
   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
   transition={{ duration: 0.8, delay: 0.5 }}
@@ -20,30 +20,31 @@ const About = () => {
   </h4>
 
   <div className="overflow-hidden rounded-xl shadow-lg border-4 border-gold">
-    
-      <video
-  src="./videos/leo-hd add.mp4"
-  controls
-  autoPlay
-  muted
-  loop
-  className="w-full h-auto rounded-lg shadow-lg border-2 border-gold"
-/>
+  <video
+    src="./videos/leo-hd add.mp4"
+    controls
+    autoPlay
+    muted
+    loop
+    className="w-full h-auto rounded-lg shadow-lg border-2 border-gold"
+  />
+</div>
+<div className="text-center mt-2 text-gray-400 text-sm">
+  Click the speaker icon to unmute
+</div>
 
-  
-  </div>
 </motion.div>
 
       <div className="container mx-auto max-w-6xl">
         
         {/* Section Title */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mt-14 mb-16"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 whitespace-nowrap">
             About <span className="text-gold-400">Our Studio</span>
           </h2>
           <div className="w-24 h-1 bg-gold mx-auto mb-8"></div>

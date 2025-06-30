@@ -107,38 +107,7 @@ const Services = () => {
 
   return (
     <section id="services" className="py-20 bg-gradient-to-b from-black/20 to-black/40 relative">
-      {/* Specialist In */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 font-montserrat">
-          SPECIALIST <span className="text-gradient">IN</span>
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {[
-            "Spot Mixing",
-            "Live Stream (YouTube & Facebook)",
-            "LED Wall",
-            "Broadcast TV Channel Out Work - Public Meeting & Political Meeting",
-            "Annual Day Event",
-            "Corporate Company Event"
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="glass-effect p-6 rounded-2xl hover-scale"
-            >
-              <h3 className="text-xl font-bold text-gold-400 mb-2">{item}</h3>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+     
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -266,6 +235,38 @@ const Services = () => {
             })}
           </div>
         </motion.div>
+         {/* Specialist In */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+        className="text-center mt-24 mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 font-montserrat">
+          SPECIALIST <span className="text-gradient">IN</span>
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            "Spot Mixing",
+            "Live Stream (YouTube & Facebook)",
+            "LED Wall",
+            "Broadcast TV Channel Out Work - Public Meeting & Political Meeting",
+            "Annual Day Event",
+            "Corporate Company Event"
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="glass-effect p-6 rounded-2xl hover-scale"
+            >
+              <h3 className="text-xl font-bold text-gold-400 mb-2">{item}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
       </div>
     </section>
   );
