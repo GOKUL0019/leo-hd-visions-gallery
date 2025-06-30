@@ -202,7 +202,7 @@ const Contact = () => {
                     <p className="text-white font-semibold">Phone</p>
                     <a href="tel:9942912840" className="text-gold-400 hover:text-gold-300 transition-colors">
                       9942912840
-                      9443212840
+                      
                     </a>
                   </div>
                 </div>
