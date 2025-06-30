@@ -6,11 +6,8 @@ import { Camera, Video, Heart, BookOpen, Package, Star } from 'lucide-react';
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
-  
-    
+
   const services = [
-    
     {
       icon: Camera,
       title: "Traditional Photography",
@@ -20,7 +17,6 @@ const Services = () => {
     },
     {
       icon: Video,
-      
       title: "Half Day Function",
       price: "₹25,000",
       description: "Engagement, Baby Shower ,Birthday ,Puberty, Ear piercing",
@@ -73,7 +69,7 @@ const Services = () => {
     {
       name: "Leo Gold Plan",
       price: "₹75,000",
-      description: "Perfect for smaller events and intimate celebrations",
+      description: "Ideal for more grand events with additional features",
       features: [
         "Traditional Video",
         "Traditional Photo",
@@ -88,7 +84,6 @@ const Services = () => {
       ]
     },
     {
-      
       name: "Leo Platinum Plan",
       price: "₹99,999",
       description: "Our most popular package for complete event coverage",
@@ -99,22 +94,52 @@ const Services = () => {
         "Drone",
         "Candid Video",
         "Highlight Video",
-        "Senthik HD Album ",
-        "Reception and Wedding each 40-Sheet Album  (Glossy or silky Mate or Feather)",
+        "Senthik HD Album",
+        "Reception and Wedding each 40-Sheet Album (Glossy or silky Mate or Feather)",
         "Gift ->12X18 lamanation -2,Calander",
-        "Outdoor shoot( post wedding)",
-        "LED Wall &Tv",
-        "360 video"
+        "Outdoor shoot (post wedding)",
+        "LED Wall & Tv",
+        "360 video"
       ],
-      
       popular: true
     }
   ];
 
   return (
-    
     <section id="services" className="py-20 bg-gradient-to-b from-black/20 to-black/40 relative">
-      
+      {/* Specialist In */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 font-montserrat">
+          SPECIALIST <span className="text-gradient">IN</span>
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            "Spot Mixing",
+            "Live Stream (YouTube & Facebook)",
+            "LED Wall",
+            "Broadcast TV Channel Out Work - Public Meeting & Political Meeting",
+            "Annual Day Event",
+            "Corporate Company Event"
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="glass-effect p-6 rounded-2xl hover-scale"
+            >
+              <h3 className="text-xl font-bold text-gold-400 mb-2">{item}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -130,8 +155,6 @@ const Services = () => {
             Professional photography and videography services tailored to your needs
           </p>
         </motion.div>
-        
-
 
         {/* Individual Services */}
         <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-10 mb-20">
@@ -141,9 +164,7 @@ const Services = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`glass-effect p-6 rounded-2xl hover-scale relative ${
-                service.popular ? 'ring-2 ring-gold-600' : ''
-              }`}
+              className={`glass-effect p-6 rounded-2xl hover-scale relative ${service.popular ? 'ring-2 ring-gold-600' : ''}`}
             >
               {service.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -153,14 +174,12 @@ const Services = () => {
                   </div>
                 </div>
               )}
-              
               <div className="text-center mb-6">
                 <service.icon className="h-12 w-12 text-gold-400 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
                 <div className="text-3xl font-bold text-gold-400 mb-2">{service.price}</div>
                 <p className="text-gray-300 text-sm">{service.description}</p>
               </div>
-
               <ul className="space-y-2">
                 {service.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="text-gray-300 text-sm flex items-center gap-2">
@@ -182,50 +201,69 @@ const Services = () => {
           <h3 className="text-3xl font-bold text-white text-center mb-12 font-montserrat">
             <span className="text-gradient">Package Deals</span>
           </h3>
-          
+
           <div className="grid md:grid-cols-3 gap-8 max-w-8xl mx-auto">
-            {packages.map((pkg, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
-                className={`glass-effect p-8 rounded-2xl hover-scale relative flex flex-col ${
-                  pkg.popular ? 'ring-2 ring-gold-400' : ''
-                }`}
-              >
-                {pkg.popular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-gold-500 text-black px-4 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                      <Star className="h-4 w-4" />
-                      Most Popular
+            {packages.map((pkg, index) => {
+              const isGold = pkg.name.includes("Gold");
+              const isPlatinum = pkg.name.includes("Platinum");
+              const isSilver = pkg.name.includes("Silver");
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
+                  className={`glass-effect p-8 rounded-2xl hover-scale relative flex flex-col
+                    ${isGold ? "bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 ring-2 ring-yellow-500 shadow-lg shadow-yellow-500/30" : ""}
+                    ${isPlatinum ? "bg-gradient-to-br from-gray-300/20 to-gray-100/10 ring-2 ring-gray-400 shadow-xl shadow-gray-300/40" : ""}
+                    ${isSilver ? "ring-2 ring-gray-400 shadow-md shadow-gray-300/20" : ""}
+                  `}
+                >
+                  {/* Badge */}
+                  <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                    <div className={`flex items-center gap-2 px-4 py-1 rounded-full text-sm font-semibold
+                      ${isGold ? "bg-yellow-500 text-black shadow-md shadow-yellow-500/30" : ""}
+                      ${isPlatinum ? "bg-gray-300 text-black shadow-md shadow-gray-300/40" : ""}
+                      ${isSilver ? "bg-gray-400 text-black shadow shadow-gray-300/30" : ""}
+                    `}>
+                      <span className="text-lg">
+                        {isGold && "🥇"}
+                        {isPlatinum && "💎"}
+                        {isSilver && "🥈"}
+                      </span>
+                      <span>
+                        {isGold && "Gold Package"}
+                        {isPlatinum && "Platinum Package"}
+                        {isSilver && "Silver Package"}
+                      </span>
                     </div>
                   </div>
-                )}
-                
-                <div className="text-center mb-6">
-                  <h4 className="text-2xl font-bold text-white mb-2">{pkg.name}</h4>
-                  <div className="text-4xl font-bold text-gold-400 mb-2">{pkg.price}</div>
-                  <p className="text-gray-300">{pkg.description}</p>
-                </div>
 
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {pkg.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="text-gray-300 flex items-center gap-3">
-                      <div className="w-3 h-3 bg-gold-400 rounded-full"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                  <div className="text-center mb-6 mt-4">
+                    <h4 className="text-2xl font-bold text-white mb-2">{pkg.name}</h4>
+                    <div className="text-4xl font-bold text-gold-400 mb-2">{pkg.price}</div>
+                    <p className="text-gray-300">{pkg.description}</p>
+                  </div>
 
-                <a
-  href="#contact"
-  className="w-full block text-center bg-gradient-to-r from-gold-500 to-gold-600 text-black py-3 rounded-full font-semibold hover:from-gold-600 hover:to-gold-700 transition-all duration-300"
->
-  Choose Plan
-</a>
-              </motion.div>
-            ))}
+                  <ul className="space-y-3 mb-8 flex-grow">
+                    {pkg.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="text-gray-300 flex items-center gap-3">
+                        <div className="w-3 h-3 bg-gold-400 rounded-full"></div>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href="#contact"
+                    className="w-full block text-center bg-gradient-to-r from-gold-500 to-gold-600 text-black py-3 rounded-full font-semibold hover:from-gold-600 hover:to-gold-700 transition-all duration-300"
+                  >
+                    Choose Plan
+                  </a>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>

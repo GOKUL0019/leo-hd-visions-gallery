@@ -7,8 +7,35 @@ const About = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
+    
     <section id="about" className="py-20 px-4 bg-black text-white" ref={ref}>
+      <motion.div
+  className="mt-16 glass-effect p-6 rounded-2xl max-w-4xl mx-auto"
+  initial={{ opacity: 0, y: 50 }}
+  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+  transition={{ duration: 0.8, delay: 0.5 }}
+>
+  <h4 className="text-2xl font-semibold text-gold mb-6 text-center">
+    Watch Our Studio In Action
+  </h4>
+
+  <div className="overflow-hidden rounded-xl shadow-lg border-4 border-gold">
+    
+      <video
+  src="./videos/leo-hd add.mp4"
+  controls
+  autoPlay
+  muted
+  loop
+  className="w-full h-auto rounded-lg shadow-lg border-2 border-gold"
+/>
+
+  
+  </div>
+</motion.div>
+
       <div className="container mx-auto max-w-6xl">
+        
         {/* Section Title */}
         <motion.div
           className="text-center mb-16"
